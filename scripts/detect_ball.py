@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import rospy
+import numpy as np
+import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
@@ -11,7 +13,7 @@ rgb_img = np.zeros((720, 1280, 3), dtype = "uint8")
 
 
 # topic /camera/color/image_raw
-def image_callback(data):
+def image_callback(ros_img):
 	global rgb_img
 	global img_received
 	rgb_img = CvBridge().imgmsg_to_cv2(ros_img, "rgb8")
@@ -31,7 +33,7 @@ def filter_image(image):
 
 if __name__ == '__main__':
 	rospy.init_node('image_input', anonymous=True)
-	img_sub = rospy.Supscriber('/camera/color/image_raw', Image, image_callback)
+	img_sub = rospy.Subscriber('/camera/color/image_raw', Image, image_callback)
 	img_pub = rospy.Publisher('/ball_2D', Image, queue_size=1)
 	
 	# set the frequency
