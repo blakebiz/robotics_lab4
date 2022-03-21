@@ -42,7 +42,7 @@ if __name__ == '__main__':
 		# make sure we process if the camera has started streaming images
 		if img_received:
 			altered_img = filter_image(rgb_img)
-			img_msg = CvBridge().cv2_to_imgmsg(altered_img, encoding='rgb8')
+			img_msg = CvBridge().cv2_to_imgmsg(altered_img, encoding='mono8')
 			img_pub.publish(img_msg)
 		rate.sleep()
 	
