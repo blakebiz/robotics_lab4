@@ -26,7 +26,7 @@ def filter_image(image):
 	# convert the image to the HSV space
 	hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
 	# define the upper and lower ranges
-	lower_yellow_hsv = np.array([25,100,1])
+	lower_yellow_hsv = np.array([25,0,1])
 	upper_yellow_hsv = np.array([60,255,255])
 	# filter the image 
 	yellow_mask = cv2.inRange(hsv, lower_yellow_hsv, upper_yellow_hsv)
