@@ -5,11 +5,19 @@ import numpy as np
 import cv2
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
+from std_msgs.msg import Bool
 
 
 img_received = False
 # define a 720x1280 3-channel image with all pixels equal to zero
 rgb_img = np.zeros((720, 1280, 3), dtype = "uint8")
+pause_toggle = False
+
+
+# topic /pause_toggle
+def pause_callback(data):
+	global pause_toggle
+	pause_toggle = data
 
 
 # topic /camera/color/image_raw
@@ -49,7 +57,8 @@ if __name__ == '__main__':
 	cv2.rectangle(rect, (500, 200), (700, 450), (255, 255, 255), -1)
 	while not rospy.is_shutdown():
 		# make sure we process if the camera has started streaming images
-		if img_received:
+		# also check if we've been signalled to pause
+		if img_received and not pause_toggle:
 			# filter original image to only contain yellows in a given range
 			altered_img = filter_image(rgb_img)
 			# logical and to get values only in the area we want
