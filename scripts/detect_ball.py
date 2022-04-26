@@ -54,7 +54,7 @@ if __name__ == '__main__':
 	# declare array of 0's with the size of the image
 	rect = np.zeros((720, 1280), dtype="uint8")
 	# select a rectangle from the array
-	cv2.rectangle(rect, (500, 200), (700, 450), (255, 255, 255), -1)
+	cv2.rectangle(rect, (250, 150), (1000, 600), (255, 255, 255), -1)
 	while not rospy.is_shutdown():
 		# make sure we process if the camera has started streaming images
 		# also check if we've been signalled to pause
